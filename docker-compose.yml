@@ -45,3 +45,12 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+        - SERVICES=s3,lambda,sqs,dynamodb
+        - DEFAULT_REGION=ap-northeast-1
+        - DATA_DIR=/tmp/localstack/data
+    volumes:
+        - ./localstack:/tmp/localstack
