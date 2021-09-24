@@ -16,3 +16,5 @@ migrate:
 	docker-compose -p laravel8 exec php ./artisan migrate
 artisan-server:
 	docker-compose -p laravel8 exec ./artisan 
+exec-localstack:
+	docker-compose -p laravel8 exec localstack sh
