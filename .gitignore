@@ -1,2 +1,3 @@
 docker/db/data
-localstack
+docker/localstack
+docker/aws
