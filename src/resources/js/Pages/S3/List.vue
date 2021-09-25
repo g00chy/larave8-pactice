@@ -33,7 +33,7 @@
         },
         data: function() {
             return {
-                fileList: [{id: 1, path:"test"}, {id: 2, path:"test2"}],
+                fileList: [],
             }
         },
         created: function() {
