@@ -1,8 +1,7 @@
-FROM php:8.0-fpm
+FROM php:8.0-fpm-alpine
 COPY php.ini /usr/local/etc/php/
 
-RUN apt-get update \
-  && apt-get install -y zlib1g-dev mariadb-client vim libzip-dev \
+RUN apk add --no-cache zip zlib-dev mariadb-client libzip-dev	\
   && docker-php-ext-install zip pdo_mysql
 
 #Composer install
