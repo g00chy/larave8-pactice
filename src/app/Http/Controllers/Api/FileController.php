@@ -16,7 +16,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        $list = FileModel::all();
+        $list = FileModel::orderBy('id', 'desc')->get();
         $data = $list;
         return response()->json($data);
     }

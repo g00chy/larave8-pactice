@@ -3,7 +3,7 @@
         <Head title="Welcome" />
         <input @change="selectedFile" type="file" name="file">
         <button-vue @click="upload" type="submit">アップロード</button-vue>
-        <list-vue></list-vue>
+        <list-vue ref="list"></list-vue>
     </div>
 </template>
 
@@ -32,6 +32,7 @@
                 this.uploadFile = files[0];
             },
             upload: function() {
+                const vm = this;
                 // FormData を利用して File を POST する
                 let formData = new FormData();
                 formData.append('file', this.uploadFile);
@@ -43,7 +44,8 @@
                 axios
                     .post('api/file', formData, config)
                     .then(function(response) {
-                        // response 処理
+                        console.log(vm.$refs);
+                        vm.$refs.list.refreshList();
                     })
                     .catch(function(error) {
                         // error 処理

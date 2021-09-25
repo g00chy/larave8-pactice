@@ -1,6 +1,6 @@
 <template>
     <div>
-        test
+        <h3> File List </h3>
         <ul v-for="file in fileList" v-bind:key="file.id">
             <li>
                 {{ file.id }}
@@ -47,6 +47,10 @@
                 .then(function(response) {
                     refreshList(vm);
                 });
+            },
+            refreshList: function() {
+                const vm = this;
+                refreshList(vm);
             }
         }
     });
