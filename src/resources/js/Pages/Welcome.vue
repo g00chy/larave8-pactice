@@ -1,6 +1,6 @@
 <template>
     <div>
-    <Head title="Welcome" />
+        <Head title="Welcome" />
 
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
@@ -19,6 +19,7 @@
                 </template>
             </div>
 
+            <nav-link href="/fileupload"> fileupload </nav-link>
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
@@ -181,11 +182,13 @@
 <script>
     import { defineComponent } from 'vue'
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import NavLink from '../Jetstream/NavLink.vue';
 
     export default defineComponent({
         components: {
             Head,
             Link,
+            NavLink,
         },
 
         props: {

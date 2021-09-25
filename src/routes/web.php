@@ -24,6 +24,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/fileupload', function () {
+    return Inertia::render('Fileupload', [
+    ]);
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function($route) {
     $route->get('/dashboard', function () {   return Inertia::render('Dashboard'); })->name('dashboard');
