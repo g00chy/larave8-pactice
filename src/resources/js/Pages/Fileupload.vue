@@ -3,11 +3,13 @@
         <Head title="Welcome" />
         <input @change="selectedFile" type="file" name="file">
         <button @click="upload" type="submit">アップロード</button>
+        <list-vue></list-vue>
     </div>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
+    import ListVue from '@/Pages/S3/List.vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
 
     export default defineComponent({
@@ -18,6 +20,7 @@
         components: {
             Head,
             Link,
+            ListVue,
         },
         methods: {
             selectedFile: function(e) {

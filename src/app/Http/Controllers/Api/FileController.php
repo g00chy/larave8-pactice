@@ -76,7 +76,7 @@ class FileController extends Controller
 
         // これで指定したファイル名で自動的にダウンロードされる
         print($result['Body']);
-        return response()->file('img', $file);
+
     }
 
     /**
