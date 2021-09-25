@@ -9,6 +9,7 @@ docker-up: chmod
 	docker-compose -p laravel8 up -d
 docker-kill:
 	docker-compose -p laravel8 kill
+docker-restart: docker-kill docker-up
 docker-rm:
 	docker-compose -p laravel8 stop
 	docker-compose -p laravel8 rm -f

@@ -5,7 +5,10 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/var/www
-
+    links:
+      - "localstack:my-bucket.s3.localhost.localstack.cloud"
+    depends_on:
+      - localstack
   nginx:
     image: nginx
     ports:
@@ -48,6 +51,8 @@ services:
 
   localstack:
     image: localstack/localstack:latest
+    ports:
+      - "9000:8080"
     environment:
         - SERVICES=s3,lambda,sqs,dynamodb
         - DEFAULT_REGION=ap-northeast-1

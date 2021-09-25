@@ -1,8 +1,8 @@
 <template>
     <div>
         <Head title="Welcome" />
-        <p><input type="file" v-on:change="fileSelected"></p>
-        <button v-on:click="fileUpload">アップロード</button>
+        <input @change="selectedFile" type="file" name="file">
+        <button @click="upload" type="submit">アップロード</button>
     </div>
 </template>
 
@@ -13,7 +13,6 @@
     export default defineComponent({
         data: function() {
             return {
-                fileInfo: "",
             };
         },
         components: {
@@ -21,14 +20,29 @@
             Link,
         },
         methods: {
-            fileUpload(){
-                const formData = new FormData()
-
-                formData.append('file',this.fileInfo)
-
-                axios.post('/api/fileupload',formData).then(response =>{
-                    console.log(response)
-                });
+            selectedFile: function(e) {
+                // 選択された File の情報を保存しておく
+                e.preventDefault();
+                let files = e.target.files;
+                this.uploadFile = files[0];
+            },
+            upload: function() {
+                // FormData を利用して File を POST する
+                let formData = new FormData();
+                formData.append('file', this.uploadFile);
+                let config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+                axios
+                    .post('api/file', formData, config)
+                    .then(function(response) {
+                        // response 処理
+                    })
+                    .catch(function(error) {
+                        // error 処理
+                    })
             }
         }
     })

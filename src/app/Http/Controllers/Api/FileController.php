@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -23,9 +24,14 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //s3アップロード開始
+        $image = $request->file('file');
+        // バケットの`myprefix`フォルダへアップロード
+        $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+
+        return response()->json(['data' => ['path' => $path]]);
     }
 
     /**
@@ -36,7 +42,12 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //s3アップロード開始
+        $image = $request->file('file');
+        // バケットの`myprefix`フォルダへアップロード
+        $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+
+        return response()->json(['data' => ['path' => $path]]);
     }
 
     /**
