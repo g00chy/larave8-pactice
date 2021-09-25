@@ -53,4 +53,10 @@ services:
         - DEFAULT_REGION=ap-northeast-1
         - DATA_DIR=/tmp/localstack/data
     volumes:
-        - ./localstack:/tmp/localstack
+        - localstack-tmp:/tmp/localstack
+        - localstack-aws:/root/.aws
+volumes:
+  localstack-tmp:
+    driver: local
+  localstack-aws:
+    driver: local
