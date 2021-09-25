@@ -109,5 +109,6 @@ class FileController extends Controller
     {
         $file = FileModel::find($id);
         $s3_delete = Storage::disk('s3')->delete($file->path);
+        $file->delete();
     }
 }
