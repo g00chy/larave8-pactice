@@ -73,10 +73,7 @@ class FileController extends Controller
         header('Content-Type: application/octet-stream');
         $filename = 'file';
         header("Content-Disposition: attachment; filename={$filename}");
-
-        // これで指定したファイル名で自動的にダウンロードされる
         print($result['Body']);
-
     }
 
     /**
@@ -110,6 +107,7 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $file = FileModel::find($id);
+        $s3_delete = Storage::disk('s3')->delete($file->path);
     }
 }

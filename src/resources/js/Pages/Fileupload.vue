@@ -2,7 +2,7 @@
     <div>
         <Head title="Welcome" />
         <input @change="selectedFile" type="file" name="file">
-        <button @click="upload" type="submit">アップロード</button>
+        <button-vue @click="upload" type="submit">アップロード</button-vue>
         <list-vue></list-vue>
     </div>
 </template>
@@ -11,6 +11,7 @@
     import { defineComponent } from 'vue'
     import ListVue from '@/Pages/S3/List.vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import ButtonVue from '../Jetstream/Button.vue';
 
     export default defineComponent({
         data: function() {
@@ -21,6 +22,7 @@
             Head,
             Link,
             ListVue,
+            ButtonVue,
         },
         methods: {
             selectedFile: function(e) {
@@ -46,7 +48,7 @@
                     .catch(function(error) {
                         // error 処理
                     })
-            }
+            },
         }
     })
 </script>
