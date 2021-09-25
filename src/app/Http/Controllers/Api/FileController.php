@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Models\File as FileModel;
 
 class FileController extends Controller
 {
@@ -15,7 +16,8 @@ class FileController extends Controller
      */
     public function index()
     {
-        $data = [ 'test' => 1];
+        $list = FileModel::all();
+        $data = $list;
         return response()->json($data);
     }
 
@@ -29,9 +31,12 @@ class FileController extends Controller
         //s3アップロード開始
         $image = $request->file('file');
         // バケットの`myprefix`フォルダへアップロード
-        $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+        $file = FileModel::create(['path' => $path]);
 
-        return response()->json(['data' => ['path' => $path]]);
+        return response()->json(['data' => [
+            'id' => $file->id,
+            'path' => $path
+        ]]);
     }
 
     /**
@@ -46,8 +51,12 @@ class FileController extends Controller
         $image = $request->file('file');
         // バケットの`myprefix`フォルダへアップロード
         $path = Storage::disk('s3')->putFile('myprefix', $image, 'public');
+        $file = FileModel::create(['path' => $path]);
 
-        return response()->json(['data' => ['path' => $path]]);
+        return response()->json(['data' => [
+            'id' => $file->id,
+            'path' => $path
+        ]]);
     }
 
     /**
@@ -58,7 +67,16 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        //
+        $file = FileModel::find($id);
+        $result = Storage::disk('s3')->getAdapter()->getClient()->getObject(['Bucket' => 'my-bucket', 'Key' => $file->path]);
+
+        header('Content-Type: application/octet-stream');
+        $filename = 'file';
+        header("Content-Disposition: attachment; filename={$filename}");
+
+        // これで指定したファイル名で自動的にダウンロードされる
+        print($result['Body']);
+        return response()->file('img', $file);
     }
 
     /**

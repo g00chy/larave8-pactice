@@ -1,4 +1,5 @@
 chmod:
+	sudo chown $$UID:$$UID -R src/app src/database
 	sudo chmod 777 -R src/storage/logs
 	sudo chmod 777 -R src/storage/framework
 docker-build: docker-kill
