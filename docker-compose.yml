@@ -38,7 +38,7 @@ services:
     volumes:
       - ./src:/var/www
     working_dir: /var/www
-    entrypoint: npm run dev
+    entrypoint: npm run watch
 
   mailhog:
     image: mailhog/mailhog
