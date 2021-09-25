@@ -15,7 +15,7 @@ docker-rm:
 docker-log-del:
 	./docker/script/logs-delete.sh
 exec-php:
-	docker-compose -p laravel8 exec php bash
+	docker-compose -p laravel8 exec php sh
 exec-node:
 	docker-compose -p laravel8 exec node sh
 migrate:
