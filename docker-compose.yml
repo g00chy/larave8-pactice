@@ -11,14 +11,14 @@ services:
       - localstack
   nginx:
     image: nginx
-    ports:
-      - 80:80
     volumes:
       - ./src:/var/www
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-
+    ports:
+      - 80:80
+        
   db:
     image: mysql:5.7
     environment:
@@ -32,8 +32,6 @@ services:
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/db/sql:/docker-entrypoint-initdb.d
-    ports:
-      - 3306:3306
 
   node:
     image: node:12-alpine
@@ -49,10 +47,11 @@ services:
       - "1025:1025"
       - "8025:8025"
 
+  redis:
+    image: redis
+
   localstack:
     image: localstack/localstack:latest
-    ports:
-      - "9000:8080"
     environment:
         - SERVICES=s3,lambda,sqs,dynamodb
         - DEFAULT_REGION=ap-northeast-1
@@ -60,6 +59,7 @@ services:
     volumes:
         - localstack-tmp:/tmp/localstack
         - localstack-aws:/root/.aws
+        - './docker/localstack:/docker-entrypoint-initaws.d/make-s3.sh'
 volumes:
   localstack-tmp:
     driver: local
