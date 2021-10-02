@@ -3,10 +3,17 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use App\Models\File as FileModel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Stream\Stream;
+
 
 // https://qiita.com/naoki0531/items/f9b8545b77c643a3fa44
 
@@ -16,21 +23,16 @@ class ProductImage implements ShouldQueue
 
     private $url;
 
-    private $fileName;
-
     /**
      * Create a new job instance.
      *
      * @param string $url
      * @param string $fileName
      */
-    public function __construct(string $url, string $fileName)
+    public function __construct(string $url)
     {
         // 画像URL
         $this->url = $url;
-
-        // 画像名
-        $this->fileName = $fileName;
     }
 
     /**
@@ -40,8 +42,12 @@ class ProductImage implements ShouldQueue
      */
     public function handle()
     {
-        // storage直下へファイルを保存
-        file_put_contents("./storage/$this->fileName", file_get_contents($this->url));
+        $client = new GuzzleClient([]);
+        $res = $client->request('GET', $this->url);
+
+        $path = Storage::disk('s3')->put('myprefix' . DIRECTORY_SEPARATOR . Str::uuid(), $res->getBody(), 'public');
+        $file = FileModel::create(['path' => $path]);
+
         Log::info('キュー実行完了');
     }
 }
