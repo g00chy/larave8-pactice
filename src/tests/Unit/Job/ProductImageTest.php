@@ -22,7 +22,9 @@ class ProductImageTest extends TestCase
 
     public function testGet()
     {
+        $count = count(Storage::disk('s3')->allFiles());
         $job = new ProductImage('https://cdn.qiita.com/assets/qiita-rectangle-71910ff07b744f263e4a2657e2ffd123.png');
         $job->handle();
+        $this->assertEquals($count, count(Storage::disk('s3')->allFiles()) - 1);
     }
 }
