@@ -39,6 +39,13 @@ class FileController extends Controller
         ]]);
     }
 
+    public function getUrl(Request $request)
+    {
+        $url = $request->get('url');
+
+        ProductImage::dispatch($url);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

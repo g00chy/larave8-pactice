@@ -3,6 +3,7 @@
         <Head title="Welcome" />
         <input @change="selectedFile" type="file" name="file">
         <button-vue @click="upload" type="submit">アップロード</button-vue>
+        <url-download></url-download>
         <list-vue ref="list"></list-vue>
     </div>
 </template>
@@ -10,6 +11,7 @@
 <script>
     import { defineComponent } from 'vue'
     import ListVue from '@/Pages/S3/List.vue';
+    import UrlDownload from '@/Pages/S3/UrlDownload.vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import ButtonVue from '../Jetstream/Button.vue';
 
@@ -23,6 +25,7 @@
             Link,
             ListVue,
             ButtonVue,
+            UrlDownload,
         },
         methods: {
             selectedFile: function(e) {

@@ -40,6 +40,8 @@ services:
       - ./src:/var/www
     working_dir: /var/www
     entrypoint: npm run watch
+    ports:
+      - 3000:3000
 
   mailhog:
     image: mailhog/mailhog

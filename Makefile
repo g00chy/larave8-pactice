@@ -22,6 +22,8 @@ exec-node:
 	docker-compose -p laravel8 exec node sh
 exec-mysql:
 	docker-compose -p laravel8 exec db mysql -u docker -p
+hot:
+	docker-compose -p laravel8 exec node yarn hot
 migrate:
 	docker-compose -p laravel8 exec php ./artisan migrate
 	docker-compose -p laravel8 exec php ./artisan migrate --database=mysql_testing

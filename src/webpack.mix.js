@@ -21,3 +21,8 @@ mix.js('resources/js/app.js', 'public/js').vue()
 if (mix.inProduction()) {
     mix.version();
 }
+
+mix.browserSync({
+    proxy: "nginx",
+    open: false // ブラウザを自動で開かない
+})
