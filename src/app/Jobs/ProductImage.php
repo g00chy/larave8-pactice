@@ -45,8 +45,15 @@ class ProductImage implements ShouldQueue
         $client = new GuzzleClient([]);
         $res = $client->request('GET', $this->url);
 
-        $path = Storage::disk('s3')->put('myprefix' . DIRECTORY_SEPARATOR . Str::uuid(), $res->getBody(), 'public');
-        $file = FileModel::create(['path' => $path]);
+        $ext = '.' . explode('/', $res->getHeader('Content-Type')[0])[1];
+        $extension = $res->getHeader('Content-Type')[0];
+        $s3FilePath = 'myprefix/' . Str::uuid() . $ext;
+        Storage::disk('s3')->put($s3FilePath, $res->getBody(), 'public');
+        FileModel::create([
+            'path' => $s3FilePath,
+            'extension' => $extension,
+        ]);
+        var_dump($s3FilePath);
 
         Log::info('キュー実行完了');
     }

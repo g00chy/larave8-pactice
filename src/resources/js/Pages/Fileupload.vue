@@ -3,7 +3,7 @@
         <Head title="Welcome" />
         <input @change="selectedFile" type="file" name="file">
         <button-vue @click="upload" type="submit">アップロード</button-vue>
-        <url-download></url-download>
+        <url-download v-on:close="refreshList"></url-download>
         <list-vue ref="list"></list-vue>
     </div>
 </template>
@@ -54,6 +54,9 @@
                         // error 処理
                     })
             },
+            refreshList: function() {
+                this.$refs.list.refreshList();
+            }
         }
     })
 </script>

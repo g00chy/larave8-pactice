@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Models\File as FileModel;
+use App\Jobs\ProductImage;
 
 class FileController extends Controller
 {
@@ -42,7 +43,6 @@ class FileController extends Controller
     public function getUrl(Request $request)
     {
         $url = $request->get('url');
-
         ProductImage::dispatch($url);
     }
 
@@ -77,7 +77,7 @@ class FileController extends Controller
         $file = FileModel::find($id);
         $result = Storage::disk('s3')->getAdapter()->getClient()->getObject(['Bucket' => 'my-bucket', 'Key' => $file->path]);
 
-        header('Content-Type: application/octet-stream');
+        header("Content-Type: {$file->extension}");
         $filename = 'file';
         header("Content-Disposition: attachment; filename={$filename}");
         print($result['Body']);
